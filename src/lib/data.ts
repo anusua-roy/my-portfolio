@@ -66,7 +66,7 @@ export const PROJECTS = [
       "A sleek developer portfolio built with Next.js, Tailwind, and framer-motion. Features dynamic theming, a custom contact form, and a flexible content structure to evolve with future plans.",
     techStack: ["Next.js", "Tailwind CSS", "React", "Framer Motion"],
     githubUrl: "https://github.com/anusua-roy/my-portfolio",
-    liveUrl: "https://my-portfolio-anusua.vercel.app", // update if deployed
+    liveUrl: "https://my-portfolio-8lde56fl8-anusua-roys-projects.vercel.app",
   },
   {
     title: "Tweet App",
@@ -217,7 +217,6 @@ export const SKILLS = [
     ],
   },
 ];
-
 
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
