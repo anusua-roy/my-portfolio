@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import PrimaryButton from "@/components/PrimaryButton";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -88,19 +89,10 @@ export default function ContactForm() {
         />
       </div>
 
-      <button
-        type="submit"
-        className="px-6 py-2 rounded font-medium transition-colors duration-300"
-        style={{
-          backgroundColor: "var(--accent)",
-          color: "#ffffff",
-        }}
-      >
-        Send Message
-      </button>
+      <PrimaryButton label="Send Message" type="submit" />
 
       {submitted && (
-        <p className="text-green-600 text-sm mt-4">
+        <p className="text-sm mt-4" style={{ color: "var(--accent)" }}>
           Thank you for reaching out! I’ll get back to you soon ✨
         </p>
       )}
