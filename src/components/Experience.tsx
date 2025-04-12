@@ -16,14 +16,14 @@ export default function Experience() {
     >
       <h2 className="text-3xl font-bold mb-8 text-center">Experience</h2>
       <div className="space-y-8">
-        {EXPERIENCE.map(({ company, role, duration, work }) => (
+        {EXPERIENCE.map(({ company, title, duration, points }) => (
           <div key={company}>
             <h3 className="text-xl font-semibold text-blue-600">
-              {role} @ {company}
+              {title} @ {company}
             </h3>
             <p className="text-sm text-gray-500 mb-2">{duration}</p>
             <ul className="list-disc list-inside space-y-1">
-              {work.map((point, i) => (
+              {points.map((point, i) => (
                 <li key={i}>{point}</li>
               ))}
             </ul>

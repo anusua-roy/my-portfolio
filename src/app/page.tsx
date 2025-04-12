@@ -3,6 +3,9 @@
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
+import Education from "@/components/Education";
+import Highlights from "@/components/Highlights";
+import Skills from "@/components/Skills";
 import ContactForm from "@/components/ContactForm";
 import { useHashScroll } from "@/hooks/useHashScroll";
 import { PROJECTS } from "@/lib/data";
@@ -17,6 +20,9 @@ export default function HomePage() {
       <Hero />
       <About id="about" />
       <Experience />
+      <Education />
+      <Highlights />
+      <Skills />
       <section id="projects" className="max-w-5xl mx-auto px-4 py-20">
         <h2 className="text-3xl font-bold mb-10 text-center">Projects</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">

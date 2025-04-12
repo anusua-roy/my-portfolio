@@ -1,12 +1,34 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function ContactForm() {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const response = await fetch("https://formspree.io/f/xblgworg", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (response.ok) {
+      setSubmitted(true);
+      form.reset();
+    }
+  };
+
   return (
     <motion.form
-      action="https://formspree.io/f/xblgworg" // 👈 replace this
-      method="POST"
+      onSubmit={handleSubmit}
       className="max-w-xl mx-auto space-y-6"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -76,6 +98,12 @@ export default function ContactForm() {
       >
         Send Message
       </button>
+
+      {submitted && (
+        <p className="text-green-600 text-sm mt-4">
+          Thank you for reaching out! I’ll get back to you soon ✨
+        </p>
+      )}
     </motion.form>
   );
 }
