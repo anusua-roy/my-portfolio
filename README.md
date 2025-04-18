@@ -43,7 +43,7 @@ A sleek and responsive developer portfolio built with **Next.js**, **Tailwind CS
 ├── src/
 │   ├── app/            # Components for App based Routing
 │   ├── components/     # Reusable Components
-│   ├── lib/data.ts     # Centralized content
+│   ├── lib/data.tsx     # Centralized content
 │   ├── hooks/
 └── ...
 ```

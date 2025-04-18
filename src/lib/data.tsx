@@ -2,8 +2,21 @@
 
 export const HERO_HEADING = "Hi, I'm";
 export const HERO_NAME = "Anusua Roy";
+
 export const HERO_TAGLINE =
-  "Frontend Engineer passionate about building clean, intelligent UIs with React, MFE, and TypeScript. Always exploring new tools, pushing boundaries, and sprinkling AI where it matters.";
+  "Frontend Engineer who builds fast, scalable UIs with React, MFE, and a sprinkle of AI. Curious about systems, obsessed with polish, and always tinkering with new tools.";
+
+export const TAGLINE_LINES = [
+  <>
+    Frontend Engineer who builds fast, scalable UIs with{" "}
+    <span className="text-blue-600 font-semibold">React</span>, MFE, and a
+    sprinkle of <span className="text-blue-600 font-semibold">AI</span>.
+  </>,
+  <>
+    Curious about systems, obsessed with polish, and always tinkering with new
+    tools.
+  </>,
+];
 
 export const HERO_CTA = [
   { label: "View Projects", href: "/projects" },
@@ -11,13 +24,17 @@ export const HERO_CTA = [
 ];
 
 export const ABOUT_TEXT = `
-Hey! I’m Anusua — a frontend engineer with a thing for sleek UI, solid architecture, and nerdy tech rabbit holes.
-By day, I build scalable micro-frontend apps. By night, I’m either tweaking my personal projects, playing with AI agents, 
-or chasing the perfect dev setup. From React and TypeScript to FastAPI and CI/CD, I love making ideas work — fast and beautifully.
+Hi, I’m Anusua — a frontend engineer who loves clean design, smart architecture, and building things that just work.
 
-Right now, I’m deep diving into Vite, GraphQL, and FastAPI while dreaming up reusable GPT tools and deploying full-stack projects. 
-Let’s build something awesome.
+I specialize in React, TypeScript, and Micro-Frontend systems, and I’ve built everything from enterprise UIs to AI-infused tools. 
+Outside of work, I’m constantly exploring — whether that’s experimenting with FastAPI backends, creating full-stack GPT agents, 
+or refining the dev setup I probably break too often.
+
+Lately, I’ve been diving into GraphQL, Vite, and no-code automation tools. My favorite projects are the ones that balance performance, UX, and a bit of fun.
+
+Let’s create something cool — fast, scalable, and unapologetically well-crafted.
 `;
+
 
 export const EXPERIENCE = [
   {
