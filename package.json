@@ -12,6 +12,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.6.5",
     "next": "15.3.0",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-feather": "^2.0.10",

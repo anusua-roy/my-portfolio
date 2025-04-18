@@ -1,9 +1,9 @@
-// src/app/layout.tsx
 import "./globals.css";
 import { ReactNode } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Head from "next/head";
+import Providers from "@/components/Providers";
 
 export const metadata = {
   title: "Anusua Roy – Portfolio",
@@ -23,10 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           property="og:description"
           content="Frontend Engineer specializing in React, Micro-Frontends, TypeScript, and AI projects."
         />
-        <meta
-          property="og:image"
-          content="/preview.png" // <- add this to your /public folder
-        />
+        <meta property="og:image" content="/preview.png" />
         <meta
           property="og:url"
           content="https://my-portfolio-anusua-roys-projects.vercel.app"
@@ -46,12 +43,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
+
       <body className="transition-colors duration-300">
-        <Navbar />
-        <main className="min-h-screen bg-inherit transition-colors duration-300">
-          {children}
-        </main>
-        <Footer />
+        <Providers>
+          <Navbar />
+          <main className="min-h-screen bg-inherit transition-colors duration-300">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
