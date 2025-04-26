@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "firebase": "^11.6.1",
     "framer-motion": "^12.6.5",
     "next": "15.3.0",
     "next-auth": "^4.24.11",
