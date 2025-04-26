@@ -2,6 +2,7 @@
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -15,14 +16,7 @@ export default function AdminPage() {
           You need to sign in with your Google account to access this area.
         </p>
 
-        <button
-          onClick={() => signIn("google")}
-          className="flex items-center gap-3 px-6 py-2 border rounded-lg shadow-sm hover:shadow-md transition bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700"
-          style={{ color: "var(--foreground)" }}
-        >
-          <FcGoogle size={22} />
-          <span className="font-medium">Sign in with Google</span>
-        </button>
+        <GoogleSignInButton />
       </section>
     );
   }
