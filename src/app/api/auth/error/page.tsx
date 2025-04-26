@@ -1,11 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PrimaryButton from "@/components/PrimaryButton";
 import CTAButton from "@/components/CTAButton";
 import { motion } from "framer-motion";
 
-export default function AuthErrorPage() {
+function ErrorContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
 
@@ -21,8 +22,8 @@ export default function AuthErrorPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      {/* Animated Icon */}
+    <section className="min-h-screen flex flex-col items-center justify-center text-center px-4">
+      {/* Icon */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -45,7 +46,8 @@ export default function AuthErrorPage() {
           />
         </svg>
       </motion.div>
-      {/* Animated Heading */}
+
+      {/* Heading */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -55,12 +57,12 @@ export default function AuthErrorPage() {
         Authentication Error
       </motion.h1>
 
-      {/* Animated Error Message */}
+      {/* Error Message */}
       <motion.p
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-lg text-gray-600 dark:text-gray-400 mb-8"
+        className="mb-8 text-lg text-gray-600 dark:text-gray-400"
       >
         {errorMessage}
       </motion.p>
@@ -70,6 +72,20 @@ export default function AuthErrorPage() {
         <PrimaryButton href="/api/auth/signin" label="Retry Sign In" />
         <CTAButton href="/" label="Go Back Home" />
       </div>
-    </div>
+    </section>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading...
+        </div>
+      }
+    >
+      <ErrorContent />
+    </Suspense>
   );
 }
