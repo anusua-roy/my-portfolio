@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ReactNode } from "react";
+import { Toaster } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Head from "next/head";
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
       <body className="transition-colors duration-300">
         <Providers>
+          <Toaster position="top-right" richColors />
           <Navbar />
           <main className="min-h-screen bg-inherit transition-colors duration-300">
             {children}

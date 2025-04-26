@@ -10,6 +10,7 @@ interface PrimaryButtonProps {
   outline?: boolean;
   type?: "button" | "submit";
   className?: string;
+  handleClick?: () => void;
 }
 
 export default function PrimaryButton({
@@ -18,6 +19,7 @@ export default function PrimaryButton({
   outline = false,
   type = "button",
   className,
+  handleClick,
 }: PrimaryButtonProps) {
   const baseClass = clsx(
     "inline-block px-6 py-2 rounded font-medium transition-colors duration-300",
@@ -36,7 +38,7 @@ export default function PrimaryButton({
   }
 
   return (
-    <button type={type} className={baseClass}>
+    <button type={type} className={baseClass} onClick={handleClick}>
       {label}
     </button>
   );
