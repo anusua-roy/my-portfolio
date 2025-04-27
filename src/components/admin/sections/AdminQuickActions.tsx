@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  FaUserEdit,
-  FaUpload,
-  FaProjectDiagram,
-  FaAward,
-  FaGraduationCap,
-} from "react-icons/fa";
+import { FaProjectDiagram, FaDatabase } from "react-icons/fa"; // ✅ Added FaDatabase for full JSON
 
 export function AdminQuickActions({
   onActionClick,
@@ -14,11 +8,8 @@ export function AdminQuickActions({
   onActionClick: (action: string) => void;
 }) {
   const actions = [
-    { title: "Edit About", icon: FaUserEdit },
-    { title: "Upload Resume", icon: FaUpload },
     { title: "Add Project", icon: FaProjectDiagram },
-    { title: "Add Certification", icon: FaAward },
-    { title: "Add Education", icon: FaGraduationCap },
+    { title: "Manage Full Portfolio JSON", icon: FaDatabase }, // ✅ New action
   ];
 
   return (

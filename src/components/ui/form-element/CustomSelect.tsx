@@ -4,7 +4,7 @@ interface CustomSelectProps {
   id: string;
   value: string;
   onChange: (value: string) => void;
-  options: string[];
+  options: (string | undefined)[];
   className?: string;
 }
 

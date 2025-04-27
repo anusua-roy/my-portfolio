@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import PrimaryButton from "@/components/ui/PrimaryButton";
+import PrimaryButton from "@/components/ui/button/PrimaryButton";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);

@@ -1,5 +1,4 @@
 // src/lib/api/adminDetailsService.ts
-
 import { db } from "@/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 

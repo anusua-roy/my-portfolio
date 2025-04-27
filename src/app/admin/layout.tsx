@@ -5,7 +5,7 @@
 import { useSession } from "next-auth/react";
 import { isLoggedIn } from "@/lib/auth/isLoggedIn";
 import { AdminLogin } from "@/components/admin/AdminLogin";
-import { AdminHeader } from "@/components/admin/common/AdminHeader";
+import { AdminHeader } from "@/components/common/AdminHeader";
 import { ReactNode } from "react";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

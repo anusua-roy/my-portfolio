@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt, FaLock } from "react-icons/fa";
 
 export type Project = {
+  id: string;
   title: string;
   description: string;
   techStack: string[];
+  status: string;
   categories?: string[];
   domain?: string;
   visibility?: string; // ✅ New key
@@ -14,6 +16,7 @@ export type Project = {
   githubUrl?: string;
   extraRepos?: { label: string; url: string }[];
   isPrivate?: boolean;
+  lastWorkedOn?: string;
 };
 
 export default function ProjectCard({ project }: { project: Project }) {
@@ -141,7 +144,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         {/* Extra Repos */}
         {(project.extraRepos ?? []).length > 0 && (
           <div className="flex flex-col gap-1 mt-1">
-            {(project.extraRepos??[]).map((repo) => (
+            {(project.extraRepos ?? []).map((repo) => (
               <a
                 key={repo.url}
                 href={repo.url}

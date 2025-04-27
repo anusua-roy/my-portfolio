@@ -4,21 +4,23 @@ import { initializeApp, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "fs";
 
-// Read service account manually
+// Load Service Account
 const serviceAccount = JSON.parse(
     readFileSync("./scripts/serviceAccountKey.json", "utf8")
 );
 
+// Load your seed data
 import {
     heroSection,
-    experience,
-    education,
     siteMetadata,
-    socialLinks,
-    navLinks,
+    projects,
+    skills,
     certifications,
     awards,
-    skills,
+    education,
+    experience,
+    navigation,
+    socialLinks,
 } from "./seedData.js";
 
 initializeApp({
@@ -27,17 +29,26 @@ initializeApp({
 
 const db = getFirestore();
 
-async function seedHeroSection() {
-    const ref = db.collection("details").doc("heroSection");
-    await ref.set(heroSection);
-    console.log("✅ Seeded /details/heroSection");
+async function deleteCollection(collectionName) {
+    const ref = db.collection(collectionName);
+    const snapshot = await ref.get();
+
+    const batch = db.batch();
+    snapshot.forEach((doc) => {
+        batch.delete(doc.ref);
+    });
+
+    if (!snapshot.empty) {
+        await batch.commit();
+        console.log(`🧹 Deleted /${collectionName}`);
+    }
 }
 
 async function seedCollection(collectionName, dataArray) {
     const batch = db.batch();
 
-    dataArray.forEach((item, idx) => {
-        const ref = db.collection(collectionName).doc(`${collectionName}-${idx}`);
+    dataArray.forEach((item) => {
+        const ref = db.collection(collectionName).doc(); // Auto-ID
         batch.set(ref, item);
     });
 
@@ -45,23 +56,39 @@ async function seedCollection(collectionName, dataArray) {
     console.log(`✅ Seeded /${collectionName}`);
 }
 
-async function seedSiteMetadata() {
-    const ref = db.collection("siteMetadata").doc("meta");
-    await ref.set(siteMetadata);
-    console.log("✅ Seeded /siteMetadata");
+async function seedFixedDoc(collectionName, docId, dataObject) {
+    const ref = db.collection(collectionName).doc(docId);
+    await ref.set(dataObject);
+    console.log(`✅ Seeded /${collectionName}/${docId}`);
 }
 
 async function main() {
     try {
-        await seedHeroSection();
-        await seedCollection("experience", experience);
-        await seedCollection("education", education);
-        await seedCollection("socialLinks", socialLinks);
-        await seedCollection("navLinks", navLinks);
-        await seedCollection("certifications", certifications.map(name => ({ name })));
-        await seedCollection("awards", awards);
-        await seedCollection("skills", skills);
-        await seedSiteMetadata();
+        console.log("🧹 Cleaning old collections...");
+        await Promise.all([
+            deleteCollection("projects"),
+            deleteCollection("skills"),
+            deleteCollection("certifications"),
+            deleteCollection("awards"),
+            deleteCollection("education"),
+            deleteCollection("experience"),
+            deleteCollection("navigation"),
+            deleteCollection("socialLinks"),
+        ]);
+
+        console.log("🌱 Seeding fresh data...");
+        await Promise.all([
+            seedFixedDoc("details", "heroSection", heroSection),
+            seedFixedDoc("details", "siteMetadata", siteMetadata),
+            seedCollection("projects", projects),
+            seedCollection("skills", skills),
+            seedCollection("certifications", certifications),
+            seedCollection("awards", awards),
+            seedCollection("education", education),
+            seedCollection("experience", experience),
+            seedCollection("navigation", navigation),
+            seedCollection("socialLinks", socialLinks),
+        ]);
 
         console.log("\n🎉 All data seeded successfully!");
         process.exit(0);

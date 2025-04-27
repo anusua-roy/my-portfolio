@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import GoogleSignInButton from "@/components/ui/GoogleSignInButton";
+import GoogleSignInButton from "@/components/ui/button/GoogleSignInButton";
 
 export default function SignInPage() {
   return (

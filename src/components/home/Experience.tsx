@@ -1,10 +1,11 @@
-// src/components/Experience.tsx
 "use client";
 
-import { EXPERIENCE } from "@/lib/data";
 import { motion } from "framer-motion";
+import { useExperienceStore } from "@/store/experienceStore";
 
 export default function Experience() {
+  const { experience } = useExperienceStore();
+
   return (
     <motion.section
       id="experience"
@@ -15,15 +16,16 @@ export default function Experience() {
       viewport={{ once: true }}
     >
       <h2 className="text-3xl font-bold mb-8 text-center">Experience</h2>
+
       <div className="space-y-8">
-        {EXPERIENCE.map(({ company, title, duration, points }) => (
-          <div key={company}>
+        {experience.map(({ company, title, duration, points }, idx) => (
+          <div key={`${company}-${idx}`}>
             <h3 className="text-xl font-semibold text-blue-600">
               {title} @ {company}
             </h3>
             <p className="text-sm text-gray-500 mb-2">{duration}</p>
             <ul className="list-disc list-inside space-y-1">
-              {points.map((point, i) => (
+              {points.map((point: string, i: number) => (
                 <li key={i}>{point}</li>
               ))}
             </ul>

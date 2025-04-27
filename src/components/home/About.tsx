@@ -1,7 +1,7 @@
 "use client";
 
-import { ABOUT_TEXT } from "@/lib/data";
 import { motion } from "framer-motion";
+import { useAdminDetailsStore } from "@/store/adminDetailsStore";
 
 const STAGGER = {
   hidden: { opacity: 0, y: 20 },
@@ -13,7 +13,8 @@ const STAGGER = {
 };
 
 export default function About({ id }: { id?: string }) {
-  const lines = ABOUT_TEXT.trim().split("\n").filter(Boolean);
+  const { aboutText } = useAdminDetailsStore();
+  const lines = aboutText.trim().split("\n").filter(Boolean);
 
   return (
     <motion.section
@@ -33,7 +34,6 @@ export default function About({ id }: { id?: string }) {
         About Me
       </motion.h2>
 
-      {/* Text container */}
       <div className="space-y-4 max-w-4xl mx-auto">
         {lines.map((line, i) => (
           <motion.p

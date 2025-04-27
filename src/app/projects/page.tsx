@@ -2,29 +2,36 @@
 
 import { useState, useMemo } from "react";
 import ProjectCard from "@/components/common/ProjectCard";
-import { PROJECTS } from "@/lib/data";
-import { FiRotateCcw } from "react-icons/fi"; // for reset icon
-import ActionButton from "@/components/ui/ActionButton";
-import { CustomSelect } from "@/components/ui/CustomSelect";
+import { useProjectsStore } from "@/store/projectsStore";
+import { FiRotateCcw } from "react-icons/fi";
+import ActionButton from "@/components/ui/button/ActionButton";
+import { CustomSelect } from "@/components/ui/form-element/CustomSelect";
 
 export default function ProjectsPage() {
+  const { projects, loading } = useProjectsStore();
+
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [domain, setDomain] = useState("All");
   const [visibility, setVisibility] = useState("All");
 
-  const categories = [
-    "All",
-    ...new Set(PROJECTS.flatMap((p) => p.categories ?? [])),
-  ];
-  const domains = [
-    "All",
-    ...new Set(PROJECTS.map((p) => p.domain).filter(Boolean)),
-  ];
-  const visibilities = [
-    "All",
-    ...new Set(PROJECTS.map((p) => p.visibility).filter(Boolean)),
-  ];
+  const categories = useMemo(
+    () => ["All", ...new Set(projects.flatMap((p) => p.categories ?? []))],
+    [projects]
+  );
+
+  const domains = useMemo(
+    () => ["All", ...new Set(projects.map((p) => p.domain).filter(Boolean))],
+    [projects]
+  );
+
+  const visibilities = useMemo(
+    () => [
+      "All",
+      ...new Set(projects.map((p) => p.visibility).filter(Boolean)),
+    ],
+    [projects]
+  );
 
   const resetFilters = () => {
     setSearch("");
@@ -34,7 +41,7 @@ export default function ProjectsPage() {
   };
 
   const filteredProjects = useMemo(() => {
-    return PROJECTS.filter((project) => {
+    return projects.filter((project) => {
       const matchesSearch =
         project.title.toLowerCase().includes(search.toLowerCase()) ||
         project.description.toLowerCase().includes(search.toLowerCase());
@@ -43,6 +50,7 @@ export default function ProjectsPage() {
         category === "All" || (project.categories ?? []).includes(category);
 
       const matchesDomain = domain === "All" || project.domain === domain;
+
       const matchesVisibility =
         visibility === "All" || project.visibility === visibility;
 
@@ -50,7 +58,7 @@ export default function ProjectsPage() {
         matchesSearch && matchesCategory && matchesDomain && matchesVisibility
       );
     });
-  }, [search, category, domain, visibility]);
+  }, [projects, search, category, domain, visibility]);
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-20">
@@ -125,7 +133,9 @@ export default function ProjectsPage() {
       </div>
 
       {/* Grid or No Results */}
-      {filteredProjects.length === 0 ? (
+      {loading ? (
+        <p className="text-center text-gray-500 italic">Loading projects...</p>
+      ) : filteredProjects.length === 0 ? (
         <p className="text-center text-gray-500 italic">
           No projects matched your filters.
         </p>

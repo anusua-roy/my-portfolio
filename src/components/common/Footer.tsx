@@ -1,6 +1,10 @@
+"use client";
+
 import { SOCIAL_LINKS, FOOTER_CTA, FOOTER_NOTE } from "@/lib/data";
 import { ICONS } from "@/components/utils/SocialIcons";
-import CTAButton from "@/components/ui/CTAButton";
+import CTAButton from "@/components/ui/button/CTAButton";
+import { FaCode } from "react-icons/fa"; // ✅ Add this
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -31,6 +35,20 @@ export default function Footer() {
           );
         })}
 
+        {/* ✅ Coding icon for Admin */}
+        <Link
+          href="/admin"
+          className="text-xl hover:text-blue-600 transition"
+          title="Developer Access"
+          aria-label="Developer Access"
+          style={{
+            color: "var(--foreground)",
+          }}
+        >
+          <FaCode />
+        </Link>
+
+        {/* CTA Button */}
         <CTAButton href={FOOTER_CTA.href} label={FOOTER_CTA.label} />
       </div>
 

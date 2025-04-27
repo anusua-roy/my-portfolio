@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "firebase": "^11.6.1",
     "firebase-admin": "^13.3.0",
     "framer-motion": "^12.6.5",

@@ -1,3 +1,4 @@
+// File: SmartSuggestionCard.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -29,12 +30,12 @@ export default function SmartSuggestionCard({
       transition={{ duration: 0.4 }}
     >
       {/* Title */}
-      <h3 className="text-lg font-bold mb-2 text-accent">
+      <h3 className="text-lg font-bold mb-2" style={{ color: "var(--accent)" }}>
         {suggestion.action}
       </h3>
 
       {/* Reason */}
-      <p className="text-sm text-muted mb-6">{suggestion.reason}</p>
+      <p className="text-sm text-muted-foreground mb-6">{suggestion.reason}</p>
 
       {/* Action Buttons aligned to right */}
       <div className="flex justify-end gap-3">

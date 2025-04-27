@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import PrimaryButton from "../ui/PrimaryButton";
-import { HERO_HEADING, HERO_NAME, HERO_CTA, TAGLINE_LINES } from "@/lib/data";
+import { useAdminDetailsStore } from "@/store/adminDetailsStore";
+import PrimaryButton from "../ui/button/PrimaryButton";
+import { HERO_CTA } from "@/lib/data"; // ✅ CTA still static from data.ts
 
 const STAGGER = {
   hidden: { opacity: 0, y: 15 },
@@ -14,6 +15,11 @@ const STAGGER = {
 };
 
 export default function Hero() {
+  const { heroHeading, heroName, taglineLine1, taglineLine2 } =
+    useAdminDetailsStore();
+
+  const taglines = [taglineLine1, taglineLine2].filter(Boolean); // ✅ Safe check
+
   return (
     <section className="flex flex-col items-center justify-center text-center py-32 px-4 max-w-3xl mx-auto bg-inherit">
       <motion.h1
@@ -22,12 +28,12 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {HERO_HEADING} <span className="text-blue-600">{HERO_NAME}</span>
+        {heroHeading} <span className="text-blue-600">{heroName}</span>
       </motion.h1>
 
-      {/* Line-by-line animated tagline */}
+      {/* Animated Taglines */}
       <div className="text-lg space-y-2 mb-8">
-        {TAGLINE_LINES.map((line, i) => (
+        {taglines.map((line, i) => (
           <motion.p
             key={i}
             className="leading-relaxed"
