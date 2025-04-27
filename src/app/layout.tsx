@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Toaster } from "sonner";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import DataPreloader from "@/components/common/DataPreloader";
 import Head from "next/head";
 import Providers from "@/components/utils/Providers";
 
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Providers>
           <Toaster position="top-right" richColors />
           {!isAdminRoute && <Navbar />} {/* Only show Navbar if not Admin */}
+          <DataPreloader />
           <main className="min-h-screen bg-inherit transition-colors duration-300">
             {children}
           </main>
