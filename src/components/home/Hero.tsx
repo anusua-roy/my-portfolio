@@ -15,10 +15,31 @@ const STAGGER = {
 };
 
 export default function Hero() {
-  const { heroHeading, heroName, taglineLine1, taglineLine2 } =
+  const { heroHeading, heroName, taglineLine1, taglineLine2, highlights } =
     useAdminDetailsStore();
 
-  const taglines = [taglineLine1, taglineLine2].filter(Boolean); // ✅ Safe check
+  const taglines = [taglineLine1, taglineLine2].filter(Boolean);
+  const highlightWords = (highlights || "")
+    .split(",")
+    .map((h) => h.trim())
+    .filter(Boolean); // e.g., ["React", "MFE", "AI"]
+
+  // Highlighting function
+  function highlightText(line: string) {
+    if (!highlightWords.length) return line;
+
+    let result = line;
+    highlightWords.forEach((word) => {
+      const regex = new RegExp(`\\b${word}\\b`, "i"); // match full word, case-insensitive
+      if (regex.test(result)) {
+        result = result.replace(
+          regex,
+          `<span class="text-blue-600 font-semibold">${word}</span>`
+        );
+      }
+    });
+    return result;
+  }
 
   return (
     <section className="flex flex-col items-center justify-center text-center py-32 px-4 max-w-3xl mx-auto bg-inherit">
@@ -41,9 +62,8 @@ export default function Hero() {
             animate="visible"
             variants={STAGGER}
             custom={i}
-          >
-            {line}
-          </motion.p>
+            dangerouslySetInnerHTML={{ __html: highlightText(line) }}
+          />
         ))}
       </div>
 

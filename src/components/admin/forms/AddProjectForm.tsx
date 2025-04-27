@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useProjectsStore } from "@/store/projectsStore";
+// import { useProjectsStore } from "@/store/projectsStore";
 import { formatISO } from "date-fns";
 
 // ✅ Define Props Interface cleanly
@@ -10,7 +10,7 @@ interface AddProjectFormProps {
 }
 
 export default function AddProjectForm({ onClose }: AddProjectFormProps) {
-  const { addProject } = useProjectsStore();
+  // const { addProject } = useProjectsStore();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -26,19 +26,19 @@ export default function AddProjectForm({ onClose }: AddProjectFormProps) {
   const handleSave = () => {
     if (!title.trim() || !description.trim()) return;
 
-    addProject({
-      id: Date.now().toString(),
-      title,
-      description,
-      techStack: techStack.split(",").map((tech) => tech.trim()),
-      visibility,
-      liveUrl: liveUrl.trim() || undefined,
-      githubUrl: githubUrl.trim() || undefined,
-      status,
-      lastWorkedOn: lastWorkedOn
-        ? formatISO(new Date(lastWorkedOn))
-        : undefined,
-    });
+    // addProject({
+    //   id: Date.now().toString(),
+    //   title,
+    //   description,
+    //   techStack: techStack.split(",").map((tech) => tech.trim()),
+    //   visibility,
+    //   liveUrl: liveUrl.trim() || undefined,
+    //   githubUrl: githubUrl.trim() || undefined,
+    //   status,
+    //   lastWorkedOn: lastWorkedOn
+    //     ? formatISO(new Date(lastWorkedOn))
+    //     : undefined,
+    // });
 
     onClose();
     resetForm();
