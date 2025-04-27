@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_LINKS } from "@/lib/data";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "@/components/common/ThemeToggle";
 import clsx from "clsx";
 import { useState } from "react";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi"; // reuse existing icon lib

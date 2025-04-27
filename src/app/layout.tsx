@@ -1,17 +1,25 @@
+"use client";
+
 import "./globals.css";
 import { ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { Toaster } from "sonner";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import Head from "next/head";
 import Providers from "@/components/utils/Providers";
 
-export const metadata = {
+const metadata = {
   title: "Anusua Roy – Portfolio",
   description: "Frontend Engineer | React | MFE | AI Projects",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+
+  // Check if we are inside the admin routes
+  const isAdminRoute = pathname.startsWith("/admin");
+
   return (
     <html lang="en">
       <Head>
@@ -48,11 +56,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="transition-colors duration-300">
         <Providers>
           <Toaster position="top-right" richColors />
-          <Navbar />
+          {!isAdminRoute && <Navbar />} {/* Only show Navbar if not Admin */}
           <main className="min-h-screen bg-inherit transition-colors duration-300">
             {children}
           </main>
-          <Footer />
+          {!isAdminRoute && <Footer />} {/* Only show Footer if not Admin */}
         </Providers>
       </body>
     </html>
