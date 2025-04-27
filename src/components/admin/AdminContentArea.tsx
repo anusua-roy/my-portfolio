@@ -1,5 +1,5 @@
-import DetailsForm from "@/components/admin/DetailsForm";
-import ProjectsForm from "@/components/admin/ProjectsForm";
+import DetailsForm from "@/components/admin/forms/DetailsForm";
+import ProjectsForm from "@/components/admin/forms/ProjectsForm";
 
 export default function AdminContentArea({
   activeStep,

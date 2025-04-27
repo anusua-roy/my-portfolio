@@ -2,8 +2,8 @@
 
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import PrimaryButton from "@/components/PrimaryButton";
-import CTAButton from "@/components/CTAButton";
+import PrimaryButton from "@/components/ui/PrimaryButton";
+import CTAButton from "@/components/ui/CTAButton";
 import { motion } from "framer-motion";
 
 function ErrorContent() {

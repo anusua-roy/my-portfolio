@@ -2,9 +2,9 @@
 
 import { useAdminDetailsStore } from "@/store/adminDetailsStore";
 import { useEffect } from "react";
-import JsonEditorModal from "@/components/admin/JsonEditorModal";
+import JsonEditorModal from "@/components/admin/common/JsonEditorModal";
 import { toast } from "sonner";
-import PrimaryButton from "@/components/PrimaryButton";
+import PrimaryButton from "@/components/ui/PrimaryButton";
 
 export default function DetailsForm() {
   const {

@@ -1,16 +1,16 @@
 // src/app/page.tsx
 "use client";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Experience from "@/components/Experience";
-import Education from "@/components/Education";
-import Highlights from "@/components/Highlights";
-import Skills from "@/components/Skills";
-import ContactForm from "@/components/ContactForm";
+import Hero from "@/components/home/Hero";
+import About from "@/components/home/About";
+import Experience from "@/components/home/Experience";
+import Education from "@/components/home/Education";
+import Highlights from "@/components/home/Highlights";
+import Skills from "@/components/home/Skills";
+import ContactForm from "@/components/home/ContactForm";
 import { useHashScroll } from "@/hooks/useHashScroll";
 import { PROJECTS } from "@/lib/data";
-import ProjectCard from "@/components/ProjectCard";
-import CTAButton from "@/components/CTAButton";
+import ProjectCard from "@/components/common/ProjectCard";
+import CTAButton from "@/components/ui/CTAButton";
 
 export default function HomePage() {
   useHashScroll();

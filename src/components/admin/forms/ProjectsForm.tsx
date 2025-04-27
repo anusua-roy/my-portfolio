@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import JsonEditorModal from "@/components/admin/JsonEditorModal";
+import JsonEditorModal from "@/components/admin/common/JsonEditorModal";
 
 interface Project {
   title: string;

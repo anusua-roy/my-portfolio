@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SimpleModal from "@/components/admin/SimpleModal";
+import SimpleModal from "@/components/admin/common/SimpleModal";
 
 export default function JsonEditorModal({
   open,

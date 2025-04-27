@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "../ui/PrimaryButton";
 import { HERO_HEADING, HERO_NAME, HERO_CTA, TAGLINE_LINES } from "@/lib/data";
 
 const STAGGER = {

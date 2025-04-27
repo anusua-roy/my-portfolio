@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import ProjectCard from "@/components/ProjectCard";
+import ProjectCard from "@/components/common/ProjectCard";
 import { PROJECTS } from "@/lib/data";
 import { FiRotateCcw } from "react-icons/fi"; // for reset icon
-import ActionButton from "@/components/ActionButton";
-import { CustomSelect } from "@/components/CustomSelect";
+import ActionButton from "@/components/ui/ActionButton";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 
 export default function ProjectsPage() {
   const [search, setSearch] = useState("");

@@ -1,6 +1,6 @@
 import { SOCIAL_LINKS, FOOTER_CTA, FOOTER_NOTE } from "@/lib/data";
-import { ICONS } from "./SocialIcons";
-import CTAButton from "./CTAButton";
+import { ICONS } from "@/components/utils/SocialIcons";
+import CTAButton from "@/components/ui/CTAButton";
 
 export default function Footer() {
   return (

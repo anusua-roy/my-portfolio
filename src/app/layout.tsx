@@ -1,10 +1,10 @@
 import "./globals.css";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
 import Head from "next/head";
-import Providers from "@/components/Providers";
+import Providers from "@/components/utils/Providers";
 
 export const metadata = {
   title: "Anusua Roy – Portfolio",
