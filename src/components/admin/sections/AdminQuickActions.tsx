@@ -1,6 +1,14 @@
 "use client";
 
-import { FaProjectDiagram, FaDatabase } from "react-icons/fa"; // ✅ Added FaDatabase for full JSON
+import {
+  FaProjectDiagram,
+  FaDatabase,
+  FaTools,
+  FaUserEdit,
+  FaInfoCircle,
+  FaBriefcase,
+  FaCertificate,
+} from "react-icons/fa";
 
 export function AdminQuickActions({
   onActionClick,
@@ -8,13 +16,20 @@ export function AdminQuickActions({
   onActionClick: (action: string) => void;
 }) {
   const actions = [
-    { title: "Add Project", icon: FaProjectDiagram },
-    { title: "Manage Full Portfolio JSON", icon: FaDatabase }, // ✅ New action
+    { title: "Create New Project", icon: FaProjectDiagram },
+    { title: "Update Taglines", icon: FaUserEdit },
+    { title: "Edit About Me", icon: FaInfoCircle },
+    { title: "Add New Certification", icon: FaCertificate },
+    { title: "Upload Resume", icon: FaTools },
+    { title: "Edit Portfolio Section by Section", icon: FaBriefcase },
+    { title: "Manage Full Data (JSON)", icon: FaDatabase },
   ];
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+      {/* Updated Section Title */}
+      <h2 className="text-xl font-semibold mb-4">Manage Your Portfolio</h2>
+
       <div className="flex flex-wrap gap-3">
         {actions.map((action) => (
           <button

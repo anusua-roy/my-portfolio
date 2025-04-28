@@ -5,6 +5,7 @@ import { AdminQuickActions } from "@/components/admin/sections/AdminQuickActions
 import AdminSmartSuggestions from "@/components/admin/sections/AdminSmartSuggestions";
 import AddProjectForm from "@/components/admin/forms/AddProjectForm";
 import JsonEditorModal from "@/components/ui/modal/JsonEditorModal";
+import SimpleModal from "@/components/ui/modal/SimpleModal"; // assuming you have this
 
 import { useProjectsStore } from "@/store/projectsStore";
 import { useAdminDetailsStore } from "@/store/adminDetailsStore";
@@ -14,6 +15,7 @@ import { useEducationStore } from "@/store/educationStore";
 
 export default function AdminPage() {
   const [openForm, setOpenForm] = useState<string | null>(null);
+  const [openJsonEditor, setOpenJsonEditor] = useState(false);
 
   const {
     projects,
@@ -68,15 +70,16 @@ export default function AdminPage() {
   }, []);
 
   function handleActionClick(action: string) {
-    if (action === "Add Project") {
-      setOpenForm("Add Project");
-    } else if (action === "Manage Full Portfolio JSON") {
-      setOpenForm("Full JSON");
+    if (action === "Manage Full Portfolio JSON") {
+      setOpenJsonEditor(true);
+    } else {
+      setOpenForm(action); // Any other form will open SimpleModal
     }
   }
 
   function closeForm() {
     setOpenForm(null);
+    setOpenJsonEditor(false);
   }
 
   function handleApplyFullJson(updated: any) {
@@ -102,9 +105,29 @@ export default function AdminPage() {
       <AdminQuickActions onActionClick={handleActionClick} />
       <AdminSmartSuggestions />
 
-      {openForm === "Add Project" && <AddProjectForm onClose={closeForm} />}
+      {/* Simple Modal for small forms */}
+      {openForm && (
+        <SimpleModal open={!!openForm} onClose={closeForm}>
+          {openForm === "Create New Project" && (
+            <AddProjectForm onClose={closeForm} />
+          )}
+          {/* Placeholder for others */}
+          {openForm !== "Create New Project" && (
+            <div className="p-6 text-center">
+              <h3 className="text-lg font-semibold mb-2">
+                Feature Coming Soon
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                The "{openForm}" feature is under development. Please check back
+                later!
+              </p>
+            </div>
+          )}
+        </SimpleModal>
+      )}
 
-      {openForm === "Full JSON" && (
+      {/* Full JSON Editor Modal */}
+      {openJsonEditor && (
         <JsonEditorModal
           open
           onClose={closeForm}
