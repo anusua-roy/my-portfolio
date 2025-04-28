@@ -14,6 +14,17 @@ import { useCertificationsStore } from "@/store/certificationsStore";
 import { useEducationStore } from "@/store/educationStore";
 import EditAboutForm from "@/components/admin/forms/EditAboutForm";
 import { useExperienceStore } from "@/store/experienceStore";
+import {
+  updateDoc,
+  doc,
+  writeBatch,
+  collection,
+  deleteDoc,
+  getDocs,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { toast } from "sonner";
+import { useAwardsStore } from "@/store/awardsStore";
 
 export default function AdminPage() {
   const [openForm, setOpenForm] = useState<string | null>(null);
@@ -55,7 +66,18 @@ export default function AdminPage() {
     fetchEducation,
     loading: educationLoading,
   } = useEducationStore();
-  const {experience, setExperience, fetchExperience, loading: experienceLoading} = useExperienceStore()
+  const {
+    experience,
+    setExperience,
+    fetchExperience,
+    loading: experienceLoading,
+  } = useExperienceStore();
+  const {
+    awards,
+    setAwards,
+    fetchAwards,
+    loading: awardsLoading,
+  } = useAwardsStore(); // Assuming awards are fetched from the same store
 
   const loading =
     detailsLoading ||
@@ -63,27 +85,28 @@ export default function AdminPage() {
     skillsLoading ||
     certificationsLoading ||
     educationLoading ||
-    experienceLoading;
+    experienceLoading ||
+    awardsLoading;
 
-useEffect(() => {
-  async function fetchAllData() {
-    try {
-      await Promise.all([
-        fetchDetails(),
-        fetchProjects(),
-        fetchSkills(),
-        fetchCertifications(),
-        fetchEducation(),
-        fetchExperience(),
-      ]);
-    } catch (error) {
-      console.error("Error loading admin panel data:", error);
+  useEffect(() => {
+    async function fetchAllData() {
+      try {
+        await Promise.all([
+          fetchDetails(),
+          fetchProjects(),
+          fetchSkills(),
+          fetchCertifications(),
+          fetchEducation(),
+          fetchExperience(),
+          fetchAwards(), // Fetch awards data
+        ]);
+      } catch (error) {
+        console.error("Error loading admin panel data:", error);
+      }
     }
-  }
 
-  fetchAllData();
-}, []);
-
+    fetchAllData();
+  }, []);
 
   function handleActionClick(action: string) {
     if (action === "Manage Full Data (JSON)") {
@@ -98,17 +121,107 @@ useEffect(() => {
     setOpenJsonEditor(false);
   }
 
-  function handleApplyFullJson(updated: any) {
+  async function handleApplyFullJson(updated: any) {
     if (!updated) return;
-    if (updated.details) setDetails(updated.details);
-    if (updated.projects) setProjects(updated.projects);
-    if (updated.skills) setSkills(updated.skills);
-    if (updated.certifications) setCertifications(updated.certifications);
-    if (updated.education) setEducation(updated.education);
-    if( updated.experience) setExperience(updated.experience)
-    closeForm();
+
+    const updates = [];
+
+    try {
+      // Update Zustand stores locally
+      if (updated.details) {
+        setDetails(updated.details);
+        updates.push(
+          updateDoc(doc(db, "details", "heroSection"), {
+            heroHeading: updated.details.heroHeading,
+            heroName: updated.details.heroName,
+            taglineLine1: updated.details.taglineLine1,
+            taglineLine2: updated.details.taglineLine2,
+            highlights: updated.details.highlights,
+            aboutText: updated.details.aboutText,
+            email: updated.details.email,
+          })
+        );
+      }
+
+      if (updated.projects) setProjects(updated.projects);
+      if (updated.skills) setSkills(updated.skills);
+      if (updated.certifications) setCertifications(updated.certifications);
+      if (updated.awards) setAwards(updated.awards); // Add awards
+      if (updated.education) setEducation(updated.education);
+      if (updated.experience) setExperience(updated.experience);
+
+      await Promise.all(updates);
+
+      toast.success("Details updated successfully.", {
+        description: "Hero section has been saved.",
+      });
+
+      await syncCollections(updated);
+
+      toast.success("Collections updated successfully.", {
+        description:
+          "Projects, skills, certifications, awards and more updated.",
+      });
+    } catch (error) {
+      console.error("Error applying Full JSON:", error);
+      toast.error("Failed to update portfolio content.");
+    } finally {
+      closeForm();
+    }
   }
 
+  async function syncCollections(updated: any) {
+    const collectionsToSync = [
+      { key: "projects", path: "projects" },
+      { key: "skills", path: "skills" },
+      { key: "certifications", path: "certifications" },
+      { key: "awards", path: "awards" },
+      { key: "education", path: "education" },
+      { key: "experience", path: "experience" },
+    ];
+
+    for (const { key, path } of collectionsToSync) {
+      if (updated[key]) {
+        const collectionRef = collection(db, path);
+        const snapshot = await getDocs(collectionRef);
+
+        const batch = writeBatch(db);
+
+        snapshot.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+
+        updated[key].forEach((item: any) => {
+          const docRef = item.id
+            ? doc(collectionRef, item.id)
+            : doc(collectionRef);
+          batch.set(docRef, item);
+        });
+
+        await batch.commit();
+      }
+    }
+
+    for (const { key, path } of collectionsToSync) {
+      if (updated[key]) {
+        const collectionRef = collection(db, path);
+        const snapshot = await getDocs(collectionRef);
+
+        const batch = writeBatch(db);
+
+        snapshot.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+
+        updated[key].forEach((item: any) => {
+          const docRef = doc(collectionRef); // Auto ID
+          batch.set(docRef, item);
+        });
+
+        await batch.commit();
+      }
+    }
+  }
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -167,6 +280,7 @@ useEffect(() => {
             experience,
             education,
             certifications,
+            awards,
           }}
           onApply={handleApplyFullJson}
         />
