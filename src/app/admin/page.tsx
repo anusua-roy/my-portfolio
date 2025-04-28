@@ -12,6 +12,8 @@ import { useAdminDetailsStore } from "@/store/adminDetailsStore";
 import { useSkillsStore } from "@/store/skillsStore";
 import { useCertificationsStore } from "@/store/certificationsStore";
 import { useEducationStore } from "@/store/educationStore";
+import EditAboutForm from "@/components/admin/forms/EditAboutForm";
+import { useExperienceStore } from "@/store/experienceStore";
 
 export default function AdminPage() {
   const [openForm, setOpenForm] = useState<string | null>(null);
@@ -53,24 +55,38 @@ export default function AdminPage() {
     fetchEducation,
     loading: educationLoading,
   } = useEducationStore();
+  const {experience, setExperience, fetchExperience, loading: experienceLoading} = useExperienceStore()
 
   const loading =
     detailsLoading ||
     projectsLoading ||
     skillsLoading ||
     certificationsLoading ||
-    educationLoading;
+    educationLoading ||
+    experienceLoading;
 
-  useEffect(() => {
-    fetchDetails();
-    fetchProjects();
-    fetchSkills();
-    fetchCertifications();
-    fetchEducation();
-  }, []);
+useEffect(() => {
+  async function fetchAllData() {
+    try {
+      await Promise.all([
+        fetchDetails(),
+        fetchProjects(),
+        fetchSkills(),
+        fetchCertifications(),
+        fetchEducation(),
+        fetchExperience(),
+      ]);
+    } catch (error) {
+      console.error("Error loading admin panel data:", error);
+    }
+  }
+
+  fetchAllData();
+}, []);
+
 
   function handleActionClick(action: string) {
-    if (action === "Manage Full Portfolio JSON") {
+    if (action === "Manage Full Data (JSON)") {
       setOpenJsonEditor(true);
     } else {
       setOpenForm(action); // Any other form will open SimpleModal
@@ -89,6 +105,7 @@ export default function AdminPage() {
     if (updated.skills) setSkills(updated.skills);
     if (updated.certifications) setCertifications(updated.certifications);
     if (updated.education) setEducation(updated.education);
+    if( updated.experience) setExperience(updated.experience)
     closeForm();
   }
 
@@ -111,18 +128,22 @@ export default function AdminPage() {
           {openForm === "Create New Project" && (
             <AddProjectForm onClose={closeForm} />
           )}
-          {/* Placeholder for others */}
-          {openForm !== "Create New Project" && (
-            <div className="p-6 text-center">
-              <h3 className="text-lg font-semibold mb-2">
-                Feature Coming Soon
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                The "{openForm}" feature is under development. Please check back
-                later!
-              </p>
-            </div>
+          {openForm === "Edit About Me" && (
+            <EditAboutForm onClose={closeForm} />
           )}
+          {/* Other forms */}
+          {openForm !== "Create New Project" &&
+            openForm !== "Edit About Me" && (
+              <div className="p-6 text-center">
+                <h3 className="text-lg font-semibold mb-2">
+                  Feature Coming Soon
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400">
+                  The "{openForm}" feature is under development. Please check
+                  back later!
+                </p>
+              </div>
+            )}
         </SimpleModal>
       )}
 
@@ -143,8 +164,9 @@ export default function AdminPage() {
             },
             projects,
             skills,
-            certifications,
+            experience,
             education,
+            certifications,
           }}
           onApply={handleApplyFullJson}
         />
